@@ -2,6 +2,8 @@ package main
 
 import ( 
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -48,9 +50,12 @@ func createTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	
 	newTask.ID = len(tasks) + 1
 	tasks = append(tasks, newTask)
 
+	fmt.Printf("Recieved task: %+v\n", newTask)
+	
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(newTask)
 }
@@ -66,5 +71,6 @@ func main() {
 		r.Get("/{id}", getTaskByID)
 	})
 
-	http.ListenAndServe(":3000", r)
+	log.Println("Server running on http://localhost:3000")
+	log.Fatal(http.ListenAndServe(":3000", r))
 }
