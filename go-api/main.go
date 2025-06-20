@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"encoding/json"
 	"net/http"
 )
@@ -15,5 +16,6 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/hello", helloHandler)
-	http.ListenAndServe(":3000", nil)
+	log.Println("Server running on http://localhost:3000")
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }
